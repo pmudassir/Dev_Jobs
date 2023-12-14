@@ -22,6 +22,25 @@ const JobDetails = () => {
 
     }
 
+    const displayTabContent = () => {
+        switch (activeTab) {
+            case "Qualifications":
+                return <Specifics
+                    title="Qualifications"
+                    points={data[0].job_highlights?.Qualifications ?? ["N/A"]}
+                />
+            case "About":
+                return <JobAbout info={data[0].job_description ?? "No data"} />
+            case "Responsibilities":
+                return <Specifics
+                    title="Responsibilities"
+                    points={data[0].job_highlights?.Responsibilities ?? ["N/A"]}
+                />
+            default:
+                break;
+        }
+    }
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
             <Stack.Screen
@@ -48,7 +67,7 @@ const JobDetails = () => {
             <>
                 <ScrollView
                     showsVerticalScrollIndicator={false}
-                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refetch} />}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                 >
                     {isLoading ? (
                         <ActivityIndicator size="large" color={COLORS.primary} />
@@ -64,14 +83,16 @@ const JobDetails = () => {
                                 companyName={data[0].employer_name}
                                 location={data[0].job_country}
                             />
-                            <JobTabs 
+                            <JobTabs
                                 tabs={tabs}
                                 activeTab={activeTab}
                                 setActiveTab={setActiveTab}
                             />
+                            {displayTabContent()}
                         </View>
                     )}
                 </ScrollView>
+                <JobFooter url={data[0]?.job_google_link ?? "https://careers.google.com/jobs/results"} />
             </>
         </SafeAreaView>
     )

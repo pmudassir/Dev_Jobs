@@ -4,9 +4,11 @@ import styles from './tabs.style'
 import { SIZES } from '../../../constants'
 
 const TabButton = ({ name, activeTab, onHandleSearchType }) => {
-  <TouchableOpacity style={styles.btn(activeTab, name)} onPress={onHandleSearchType}>
-    <Text style={styles.btnText(activeTab, name)}>{name}</Text>
-  </TouchableOpacity>
+  return (
+    <TouchableOpacity style={styles.btn(activeTab, name)} onPress={onHandleSearchType}>
+      <Text style={styles.btnText(activeTab, name)}>{name}</Text>
+    </TouchableOpacity>
+  )
 }
 
 const Tabs = ({ tabs, activeTab, setActiveTab }) => {
